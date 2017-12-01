@@ -2,22 +2,22 @@ package scrapper;
 
 public class Torrent {
 	
-	
-	public static final String all = "all";
-	public static final String cienciaFiccion =  "cienciaFiccion";
-	public static final String drama =  "drama";
-	public static final String aventura =  "aventura";
-	public static final String thriller =  "thriller";
-	public static final String comedia =  "comedia";
-	
-	String url = "";
-	String capitulo = "";
-	String description = "";
-	String calidad = "";
-	String titulo = "";
-	String urlUi = "";
-	boolean isInGigas = false;
-	Double tamanio = new Double(0);
+	private boolean isCienciaFiccion = false;
+	private boolean isFantasia = false;
+	private boolean isDrama = false;
+	private boolean isAccion = false;
+	private boolean isAventura = false;
+	private boolean isSuspense = false;
+	private boolean isHumor = false;
+	private boolean isHechosReales = false;
+	private String url = "";
+	private String capitulo = "";
+	private String description = "";
+	private String calidad = "";
+	private String titulo = "";
+	private String urlUi = "";
+	private boolean isInGigas = false;
+	private Double tamanio = new Double(0);
 	
 	public String getUrl() {
 		return url;
@@ -66,6 +66,54 @@ public class Torrent {
 	}
 	public void setTamanio(Double tamanio) {
 		this.tamanio = tamanio;
+	}
+	public boolean isCienciaFiccion() {
+		return isCienciaFiccion;
+	}
+	public void setCienciaFiccion(boolean isCienciaFiccion) {
+		this.isCienciaFiccion = isCienciaFiccion;
+	}
+	public boolean isFantasia() {
+		return isFantasia;
+	}
+	public void setFantasia(boolean isFantasia) {
+		this.isFantasia = isFantasia;
+	}
+	public boolean isDrama() {
+		return isDrama;
+	}
+	public void setDrama(boolean isDrama) {
+		this.isDrama = isDrama;
+	}
+	public boolean isAccion() {
+		return isAccion;
+	}
+	public void setAccion(boolean isAccion) {
+		this.isAccion = isAccion;
+	}
+	public boolean isAventura() {
+		return isAventura;
+	}
+	public void setAventura(boolean isAventura) {
+		this.isAventura = isAventura;
+	}
+	public boolean isHumor() {
+		return isHumor;
+	}
+	public void setHumor(boolean isHumor) {
+		this.isHumor = isHumor;
+	}
+	public boolean isHechosReales() {
+		return isHechosReales;
+	}
+	public void setHechosReales(boolean isHechosReales) {
+		this.isHechosReales = isHechosReales;
+	}
+	public boolean isSuspense() {
+		return isSuspense;
+	}
+	public void setSuspense(boolean isSuspense) {
+		this.isSuspense = isSuspense;
 	}
 	
 	

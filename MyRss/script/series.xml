@@ -13,15 +13,15 @@
 	 -->
 	<!-- 
 			urlSource="http://www.mejortorrent.com/"
-			category="all|cienciaFiccion|drama|aventura|thriller|comedia"
+			category="all|cienciaFiccion|drama|aventura|thriller|comedia|reales|fantasia"
 			definition="all|720p|1080p|hdrip"
 			langVideo="ES|VO|EN|all"
 	 -->
 	<films>
 		<film
-			titulo="Ciencia Ficcion 720p Español"
+			titulo="Ciencia Ficcion 720p Espaniol"
 			urlSource="http://www.mejortorrent.com/"
-			category="cienciaFiccion"
+			category="cienciaFiccion drama"
 			definition="720p"
 			langVideo="ES"
 			maxDownloadSizeGB="5"

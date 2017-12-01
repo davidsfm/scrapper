@@ -87,14 +87,11 @@ public class Scrapper {
 	        //System.out.println("[Scrapper]"+serie.getTextContent());
 	        
 	        fuenteWebs.add( fuenteWeb );
-	        
 	    }
 	    
 		this.generaRSS( fuenteWebs );
 	}
 	private void generateRSS_Filsm(NodeList films) throws Exception{
-		
-		//System.out.println("A: "+films.item(0));
 		
 	    for (int temp = 0; temp < films.getLength(); temp++) {
 	        Node film = films.item(temp);
@@ -108,7 +105,6 @@ public class Scrapper {
 	        String langVideo = film.getAttributes().getNamedItem("langVideo").getTextContent();
 	        Double maxDownloadSizeGB =  new Double( film.getAttributes().getNamedItem("maxDownloadSizeGB").getTextContent() );
 	        
-	        
 	        FuenteMejortorrentFilms fuenteWeb = (FuenteMejortorrentFilms) FactoryFuenteWeb.builder( url , true);
 	        fuenteWeb.setTitulo(titulo);
 	        fuenteWeb.setUrlFuenteWeb(url);
@@ -116,8 +112,6 @@ public class Scrapper {
 	        fuenteWeb.setDefinition(definition);
 	        fuenteWeb.setLangVideo(langVideo);
 	        fuenteWeb.setMaxSizeGB( maxDownloadSizeGB );
-	        
-	        //System.out.println("[Scrapper]"+serie.getTextContent());
 	        
 	        fuenteWebs.add( fuenteWeb );
 	        
@@ -138,7 +132,7 @@ public class Scrapper {
 			FuenteMejortorrentFilms fuenteWeb = (FuenteMejortorrentFilms) iterator.next();
 	        String copyright = "Copyright hold by The Fox";
 	        String title = "My RSS of " + fuenteWeb.getTitulo();
-	        String description = "RSS de pelis "+fuenteWeb.getDefinition()+ " de " + fuenteWeb.getCategory() + " en " + fuenteWeb.getLangVideo() + " maximo " + fuenteWeb.getMaxSizeGB()+" GB";
+	        String description = "Pelis de ["+fuenteWeb.getDefinition()+ "] de [" + fuenteWeb.getCategory() + "] en " + fuenteWeb.getLangVideo() + " maximo " + fuenteWeb.getMaxSizeGB()+" GB";
 	        String language = "en";
 	        String link = fuenteWeb.getUrlFuenteWeb();
 	        Calendar cal = new GregorianCalendar();
@@ -158,41 +152,48 @@ public class Scrapper {
 			
 				if(torrent.getTamanio().longValue() < fuenteWeb.getMaxSizeGB().longValue() ) {
 					
-					FeedMessage feed = new FeedMessage();
-			        feed.setTitle( torrent.getTitulo() );
-			        feed.setDescription( torrent.getDescription() );
-			        feed.setAuthor("");
-			        feed.setGuid( "" );
-			        feed.setLink( torrent.getUrl() );
-			        rssFeeder.getMessages().add(feed);
+					boolean aniaDirTorrent = (
+							( fuenteWeb.getCategory().contains( "cienciaFiccion" ) && torrent.isCienciaFiccion() ) ||
+							( fuenteWeb.getCategory().contains( "drama" ) && torrent.isDrama() ) ||
+							( fuenteWeb.getCategory().contains( "aventura" ) && torrent.isAventura() ) ||
+							( fuenteWeb.getCategory().contains( "thriller" ) && torrent.isSuspense() ) ||
+							( fuenteWeb.getCategory().contains( "comedia" ) && torrent.isHumor() ) ||
+							( fuenteWeb.getCategory().contains( "reales" ) && torrent.isHechosReales()) ||
+							( fuenteWeb.getCategory().contains( "fantasia" ) && torrent.isFantasia() ) ||
+							( fuenteWeb.getCategory().contains( "all" ) )
+							);
 					
+					if( aniaDirTorrent ) {
+						FeedMessage feed = new FeedMessage();
+				        feed.setTitle( torrent.getTitulo() );
+				        feed.setDescription( torrent.getDescription() );
+				        feed.setAuthor("");
+				        feed.setGuid( "" );
+				        feed.setLink( torrent.getUrl() );
+				        rssFeeder.getMessages().add(feed);
+				        System.out.println("[Scrapper][Generating RSS Films] Torren A�ADIDO a la seleccion! ( "+torrent.getTitulo()+")" );
+					}else{
+						System.out.println("[Scrapper][Generating RSS Films] Torrent ( "+torrent.getTitulo()+" ) , diferente al seleccionado: " + fuenteWeb.getCategory() );
+					}
 				}else {
-					
-					System.out.println("[Scrapper][Generating RSS] Fichero ( "+torrent.getTitulo()+", "+torrent.getTamanio()+" GB ) , mayor de " + fuenteWeb.getMaxSizeGB() + " GB");
+					System.out.println("[Scrapper][Generating RSS Films] Torrent ( "+torrent.getTitulo()+", "+torrent.getTamanio()+" GB ) , mayor de " + fuenteWeb.getMaxSizeGB() + " GB");
 				}
-				
-				
-				
 		        i++;
 			}
 	        
 	        // now write the file
-	        RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, this.getProperty("ruta.series.rss")+fuenteWeb.getTitulo().replace(" ", "")+"_RssFilms.rss");
+	        RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, this.getProperty("ruta.series.rss")+fuenteWeb.getTitulo().replace(" ", "")+"_films.rss");
 	        try {
 	            writer.write();
-	            System.out.println("RSS Genernado: "+this.getProperty("ruta.series.rss")+fuenteWeb.getTitulo().replace(" ", "")+"_RssFilms.rss");
+	            System.out.println("RSS Genernado: "+this.getProperty("ruta.series.rss")+fuenteWeb.getTitulo().replace(" ", "")+"_films.rss");
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-	        
 		}
-		
 	}
 
 	private void generaRSS(Vector<FuenteWeb> fuenteWebs) throws Exception {
 		//rssSeries.rss
-		
-
         for (Iterator iterator = fuenteWebs.iterator(); iterator.hasNext();) {
         	
 			FuenteWeb fuenteWeb = (FuenteWeb) iterator.next();
@@ -226,9 +227,6 @@ public class Scrapper {
 				
 		        i++;
 			}
-	        
-
-	        
 	        // now write the file
 	        RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, this.getProperty("ruta.series.rss")+fuenteWeb.getTitulo().replace(" ", "")+"_RssSeries.rss");
 	        try {
@@ -237,14 +235,8 @@ public class Scrapper {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-	        
-	        
 		}
-        
-        
-		
 	}
-	
 		
 	public static void main(String[] args) {
 		//System.out.println("[Lanzado] Fichero " + args[0]);

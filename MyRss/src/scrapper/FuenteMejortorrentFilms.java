@@ -22,9 +22,6 @@ public class FuenteMejortorrentFilms extends FuenteWeb{
 	
 	@Override
 	public Vector<String> getListTorrents() throws Exception {
-		
-		
-		
 		return null;
 	}
 	public Vector<Torrent> getListTorrentsFilms() throws Exception {
@@ -56,17 +53,15 @@ public class FuenteMejortorrentFilms extends FuenteWeb{
 			}
 			
 //			System.out.println(matchOk + " - Filtro: "+this.getDefinition()+" - Scrapeado:"+calidad+"");
-//			System.out.println(  );
+//			System.out.println();
 //			System.out.println();
 			
-			
-			Torrent torrent = this.scrap(urlFilm, calidad);
-			
-			
-			
-			torrents.add( torrent );
+			//En este punto machamos la calidad
+			if( matchOk ){
+				Torrent torrent = this.scrap(urlFilm, calidad);
+				torrents.add( torrent );
+			}
 		}
-		
 		return torrents;
 	}
 
@@ -80,7 +75,7 @@ public class FuenteMejortorrentFilms extends FuenteWeb{
 		//table width='450'
 		Element tablaDesc = doc.select("table[width=450]").first();
 		
-		//System.out.println(tablaDesc.html());
+//		System.out.println(tablaDesc.html());
 //		
 //		System.out.println();
 //		System.out.println("ESTE?:"+tablaDesc.select("span>b").html());
@@ -95,7 +90,7 @@ public class FuenteMejortorrentFilms extends FuenteWeb{
 		
 		//PARSEAMOS EL TAMAÑO
 		//<b>Tama�o:</b>&nbsp; 1,71 GB<img width="1
-		String cadenaTamanio = "<b>Tamaño:</b>&nbsp; ".toLowerCase();
+		String cadenaTamanio = "<b>Tama�o:</b>&nbsp; ".toLowerCase();
 		int pos1 = tabla.indexOf( cadenaTamanio ) + cadenaTamanio.length();
 		int pos2 = (tabla.indexOf("gb<")!=-1?tabla.indexOf("gb<"):tabla.indexOf("mb<"));
 		
@@ -105,6 +100,7 @@ public class FuenteMejortorrentFilms extends FuenteWeb{
 		
 		Double tamanio = new Double(sTamanio.replace(',', '.'));
 		//System.out.println("TAMAÑO: "+tamanio);
+
 		
 		//DESCARGAMOS EL TORRENT DE LA PAGINA, accediendo a la página de descarga
 		Document doc2 = Jsoup.connect( paginaDescarga.attr("abs:href") ).get();
@@ -133,6 +129,15 @@ public class FuenteMejortorrentFilms extends FuenteWeb{
 		}
 		
 		torrent.setDescription(descripcion);
+		torrent.setCienciaFiccion( tabla.indexOf("ficci�n")!=-1 );
+		torrent.setAccion(tabla.indexOf("acci�n")!=-1);
+		torrent.setAventura(tabla.indexOf("aventura")!=-1);
+		torrent.setDrama(tabla.indexOf("drama")!=-1);
+		torrent.setFantasia(tabla.indexOf("fantas�a")!=-1);
+		torrent.setHechosReales(false);
+		torrent.setHumor(false);
+		torrent.setSuspense(false);
+		//TODO: Ver que literal filtrar
 		
 		return torrent;
 	}
