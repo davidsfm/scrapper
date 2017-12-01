@@ -1,0 +1,31 @@
+<downloads>
+	<!-- 
+	<series>
+		<serie  url="http://www.mejortorrent.com/serie-descargar-torrents-45344-45345-Star-Trek-Discovery-1-Temporada-720p.html" 
+				titulo="Star Trek"
+				>
+		</serie>
+		<serie  url="http://www.mejortorrent.com/serie-descargar-torrents-45344-45345-Star-Trek-Discovery-1-Temporada-720p.html" 
+				titulo="Star Trek"
+				>
+		</serie>
+	</series>
+	 -->
+	<!-- 
+			urlSource="http://www.mejortorrent.com/"
+			category="all|cienciaFiccion|drama|aventura|thriller|comedia"
+			definition="all|720p|1080p|hdrip"
+			langVideo="ES|VO|EN|all"
+	 -->
+	<films>
+		<film
+			titulo="Ciencia Ficcion 720p Español"
+			urlSource="http://www.mejortorrent.com/"
+			category="cienciaFiccion"
+			definition="720p"
+			langVideo="ES"
+			maxDownloadSizeGB="5"
+		>
+		</film>
+	</films>
+</downloads>

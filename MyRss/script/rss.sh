@@ -1,0 +1,1 @@
+java -jar  myrss.jar
