@@ -171,7 +171,7 @@ public class Scrapper {
 				        feed.setGuid( "" );
 				        feed.setLink( torrent.getUrl() );
 				        rssFeeder.getMessages().add(feed);
-				        System.out.println("[Scrapper][Generating RSS Films] Torren A�ADIDO a la seleccion! ( "+torrent.getTitulo()+")" );
+				        System.out.println("[Scrapper][Generating RSS Films] Torren AÑADIDO a la seleccion! ( "+torrent.getTitulo()+")" );
 					}else{
 						System.out.println("[Scrapper][Generating RSS Films] Torrent ( "+torrent.getTitulo()+" ) , diferente al seleccionado: " + fuenteWeb.getCategory() );
 					}
